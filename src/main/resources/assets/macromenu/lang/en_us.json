@@ -1,0 +1,44 @@
+{
+  "key.macromenu.open": "Open Macro Menu",
+  "key.categories.macromenu": "Macro Menu",
+
+  "screen.macromenu.title": "Macro Menu",
+  "screen.macromenu.add_title": "Add New Macro",
+  "screen.macromenu.edit_title": "Edit Macro",
+  "screen.macromenu.select_title_edit": "Select Macro to Edit",
+  "screen.macromenu.select_title_delete": "Select Macro to Delete",
+  "screen.macromenu.settings_title": "Macro Menu Settings",
+
+  "macromenu.gui.settings": "Settings",
+  "macromenu.gui.no_macros_message": "No Macros Yet! Click 'Add' to create one.",
+  "macromenu.gui.add": "Add",
+  "macromenu.gui.edit": "Edit",
+  "macromenu.gui.delete": "Delete",
+  "macromenu.gui.label": "Button Label",
+  "macromenu.gui.command": "Command (e.g., /say Hello)",
+  "macromenu.gui.save": "Save",
+  "macromenu.gui.cancel": "Cancel",
+  "macromenu.gui.back": "Back",
+  "macromenu.gui.confirm_delete_title": "Confirm Deletion",
+  "macromenu.gui.confirm_delete_message": "Are you sure you want to delete macro \"%s\"?",
+  "macromenu.gui.yes": "Yes",
+  "macromenu.gui.no": "No",
+
+  "macromenu.gui.show_tooltips": "Show Tooltips: %s",
+  "macromenu.gui.enabled": "Enabled",
+  "macromenu.gui.disabled": "Disabled",
+  "macromenu.gui.background_transparency": "Background Transparency: %s%%",
+
+  "macromenu.gui.button_size": "Button Size: %s",
+  "macromenu.gui.button_size.small": "Small",
+  "macromenu.gui.button_size.small.tooltip": "Makes buttons smaller.",
+  "macromenu.gui.button_size.medium": "Medium",
+  "macromenu.gui.button_size.medium.tooltip": "Standard button size.",
+  "macromenu.gui.button_size.large": "Large",
+  "macromenu.gui.button_size.large.tooltip": "Makes buttons larger.",
+
+  "macromenu.gui.command_delay": "Command Delay: %s sec",
+  "gui.slider.value": "%s%%",
+  "macromenu.gui.command_delay": "Command Delay: %s seconds",
+  "macromenu.gui.command_delay_tooltip": "Sets the delay in seconds before a command executes."
+}

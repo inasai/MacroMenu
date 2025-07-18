@@ -1,0 +1,44 @@
+{
+  "key.macromenu.open": "Відкрити Макро Меню",
+  "key.categories.macromenu": "Макро Меню",
+
+  "screen.macromenu.title": "Макро Меню",
+  "screen.macromenu.add_title": "Додати Нове Макро",
+  "screen.macromenu.edit_title": "Редагувати Макро",
+  "screen.macromenu.select_title_edit": "Вибрати Макро для Редагування",
+  "screen.macromenu.select_title_delete": "Вибрати Макро для Видалення",
+  "screen.macromenu.settings_title": "Налаштування Макро Меню",
+
+  "macromenu.gui.settings": "Налаштування",
+  "macromenu.gui.no_macros_message": "Макросів поки немає! Натисніть 'Додати', щоб створити.",
+  "macromenu.gui.add": "Додати",
+  "macromenu.gui.edit": "Редагувати",
+  "macromenu.gui.delete": "Видалити",
+  "macromenu.gui.label": "Назва Кнопки",
+  "macromenu.gui.command": "Команда (наприклад, /say Привіт)",
+  "macromenu.gui.save": "Зберегти",
+  "macromenu.gui.cancel": "Скасувати",
+  "macromenu.gui.back": "Назад",
+  "macromenu.gui.confirm_delete_title": "Підтвердити Видалення",
+  "macromenu.gui.confirm_delete_message": "Ви впевнені, що хочете видалити макрос \"%s\"?",
+  "macromenu.gui.yes": "Так",
+  "macromenu.gui.no": "Ні",
+
+  "macromenu.gui.show_tooltips": "Показувати підказки: %s",
+  "macromenu.gui.enabled": "Увімкнено",
+  "macromenu.gui.disabled": "Вимкнено",
+  "macromenu.gui.background_transparency": "Прозорість фону: %s%%",
+
+  "macromenu.gui.button_size": "Розмір кнопок: %s",
+  "macromenu.gui.button_size.small": "Малий",
+  "macromenu.gui.button_size.small.tooltip": "Робить кнопки меншими.",
+  "macromenu.gui.button_size.medium": "Середній",
+  "macromenu.gui.button_size.medium.tooltip": "Стандартний розмір кнопок.",
+  "macromenu.gui.button_size.large": "Великий",
+  "macromenu.gui.button_size.large.tooltip": "Робить кнопки більшими.",
+
+  "macromenu.gui.command_delay": "Затримка команди: %s сек",
+  "gui.slider.value": "%s%%",
+  "macromenu.gui.command_delay": "Затримка команди: %s секунд",
+  "macromenu.gui.command_delay_tooltip": "Встановлює затримку в секундах перед виконанням команди."
+}
