@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java CI with Gradle](https://github.com/inasai/MacroMenu/actions/workflows/java-build.yml/badge.svg)](https://github.com/inasai/MacroMenu/actions/workflows/java-build.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 # MacroMenu
 
 [//]: # (![MacroMenu Banner]&#40;link-to-your-banner-image.png&#41;)

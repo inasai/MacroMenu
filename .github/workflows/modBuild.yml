@@ -1,5 +1,5 @@
 # Назва вашого робочого процесу, яку ви бачитимете на GitHub
-name: Java CI with Gradle
+name: MacroMenu
 
 # Коли запускати цей робочий процес
 on:
