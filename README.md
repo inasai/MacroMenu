@@ -1,4 +1,4 @@
-[![Java CI with Gradle](https://github.com/inasai/MacroMenu/actions/workflows/java-build.yml/badge.svg)](https://github.com/inasai/MacroMenu/actions/workflows/java-build.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![MacroMenu](https://github.com/inasai/MacroMenu/actions/workflows/modBuild.yml/badge.svg)](https://github.com/inasai/MacroMenu/actions/workflows/modBuild.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 # MacroMenu
 
 [//]: # (![MacroMenu Banner]&#40;link-to-your-banner-image.png&#41;)
@@ -43,15 +43,6 @@
         * Hover over your Forge 1.20.1 installation and click the folder icon.
         * In the opened folder, locate the `mods` folder. If it doesn't exist, create it.
 4.  **Launch Minecraft** with the Forge profile.
-
----
-
-## Downloads
-
-You can download the latest version of **MacroMenu** from the following platforms:
-
-[![Modrinth Logo](https://cdn.modrinth.com/data/logo.svg)](https://modrinth.com/mod/macromenu)
-[![CurseForge Logo](https://media.forgecdn.net/avatars/44/979/637375685250499719.png)](https://www.curseforge.com/minecraft/mc-mods/your-macromenu-mod-slug-on-curseforge)
 
 ---
 
@@ -105,15 +96,6 @@ If you have any questions, encounter bugs, or want to provide feedback, please u
         * Наведіть курсор на вашу установку Forge 1.20.1 і натисніть іконку папки.
         * У папці, що відкрилася, знайдіть папку `mods`. Якщо її немає, створіть її.
 4.  **Запустіть Minecraft** з профілем Forge.
-
----
-
-## Завантаження
-
-Ви можете завантажити останню версію **MacroMenu** на наступних платформах:
-
-[![Логотип Modrinth](https://cdn.modrinth.com/data/logo.svg)](https://modrinth.com/mod/macromenu)
-[![Логотип CurseForge](https://media.forgecdn.net/avatars/44/979/637375685250499719.png)](https://www.curseforge.com/minecraft/mc-mods/your-macromenu-mod-slug-on-curseforge)
 
 ---
 
