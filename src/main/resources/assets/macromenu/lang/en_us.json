@@ -37,7 +37,6 @@
   "macromenu.gui.button_size.large": "Large",
   "macromenu.gui.button_size.large.tooltip": "Makes buttons larger.",
 
-  "macromenu.gui.command_delay": "Command Delay: %s sec",
   "gui.slider.value": "%s%%",
   "macromenu.gui.command_delay": "Command Delay: %s seconds",
   "macromenu.gui.command_delay_tooltip": "Sets the delay in seconds before a command executes."

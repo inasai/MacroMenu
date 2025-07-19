@@ -1,13 +1,13 @@
 {
-  "key.macromenu.open": "Відкрити Макро Меню",
-  "key.categories.macromenu": "Макро Меню",
+  "key.macromenu.open": "Відкрити Меню Макросів",
+  "key.categories.macromenu": "Меню Макросів",
 
-  "screen.macromenu.title": "Макро Меню",
-  "screen.macromenu.add_title": "Додати Нове Макро",
-  "screen.macromenu.edit_title": "Редагувати Макро",
-  "screen.macromenu.select_title_edit": "Вибрати Макро для Редагування",
-  "screen.macromenu.select_title_delete": "Вибрати Макро для Видалення",
-  "screen.macromenu.settings_title": "Налаштування Макро Меню",
+  "screen.macromenu.title": "Меню Макросів",
+  "screen.macromenu.add_title": "Додати новий макрос",
+  "screen.macromenu.edit_title": "Редагувати макрос",
+  "screen.macromenu.select_title_edit": "Вибрати макрос для редагування",
+  "screen.macromenu.select_title_delete": "Вибрати макрос для видалення",
+  "screen.macromenu.settings_title": "Налаштування Меню Макросів",
 
   "macromenu.gui.settings": "Налаштування",
   "macromenu.gui.no_macros_message": "Макросів поки немає! Натисніть 'Додати', щоб створити.",
@@ -37,7 +37,6 @@
   "macromenu.gui.button_size.large": "Великий",
   "macromenu.gui.button_size.large.tooltip": "Робить кнопки більшими.",
 
-  "macromenu.gui.command_delay": "Затримка команди: %s сек",
   "gui.slider.value": "%s%%",
   "macromenu.gui.command_delay": "Затримка команди: %s секунд",
   "macromenu.gui.command_delay_tooltip": "Встановлює затримку в секундах перед виконанням команди."
