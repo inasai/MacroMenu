@@ -33,9 +33,7 @@
 ---
 
 ## Installation
-[![CurseForge](https://img.shields.io/badge/CurseForge-Download-orange?logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/macromenu)
-
-[![Modrinth](https://img.shields.io/badge/Modrinth-Download-5da545?logo=modrinth&logoColor=white)](https://modrinth.com/mod/macromenu)
+[![CurseForge](https://img.shields.io/badge/CurseForge-Download-orange?logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/macromenu) [![Modrinth](https://img.shields.io/badge/Modrinth-Download-5da545?logo=modrinth&logoColor=white)](https://modrinth.com/mod/macromenu)
 
 1.  **Ensure you have Minecraft Forge installed** for Minecraft 1.20.1.
 2.  **Download** the MacroMenu `.jar` file from one of the links below.
