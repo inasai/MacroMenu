@@ -87,6 +87,7 @@ If you have any questions, encounter bugs, or want to provide feedback, please u
 ---
 
 ## Встановлення
+[![CurseForge](https://img.shields.io/badge/CurseForge-Download-orange?logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/macromenu) [![Modrinth](https://img.shields.io/badge/Modrinth-Download-5da545?logo=modrinth&logoColor=white)](https://modrinth.com/mod/macromenu)
 
 1.  **Переконайтеся, що у вас встановлено Minecraft Forge** для Minecraft 1.20.1.
 2.  **Завантажте** файл `.jar` модифікації MacroMenu за одним із посилань нижче.
