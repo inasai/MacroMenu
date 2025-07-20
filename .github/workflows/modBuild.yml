@@ -1,16 +1,16 @@
-# Назва вашого робочого процесу, яку ви бачитимете на GitHub
+# Назва для GitHub
 name: MacroMenu
 
-# Коли запускати цей робочий процес
+# Запуск
 on:
   push:
-    branches: [ "main" ] # Запускати при пуші в гілку 'main' (або 'master', якщо у вас так)
+    branches: [ "main" ] # Запускати при пуші в гілку 'main'
   pull_request:
     branches: [ "main" ] # Запускати при створенні Pull Request до гілки 'main'
 
 # Визначення завдань (jobs)
 jobs:
-  build: # Назва завдання (може бути будь-якою)
+  build: # Назва
     runs-on: ubuntu-latest # Виконувати на віртуальній машині Ubuntu
 
     steps:
@@ -22,26 +22,22 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4 # Використовувати офіційний action для налаштування Java
         with:
-          java-version: '17' # Версія Java, яка потрібна для Minecraft 1.20.1 та Forge
+          java-version: '17' # Версія Java, яка потрібна для Minecraft та Forge
           distribution: 'temurin' # Рекомендований дистрибутив JDK
           cache: 'gradle' # Кешувати залежності Gradle для швидших збірок
 
       # Крок 3: Надання прав на виконання Gradle Wrapper
-      # Це необхідно на Linux/macOS, щоб Gradle Wrapper міг бути виконаний
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       # Крок 4: Запуск збірки Gradle (build)
-      # 'build' - це стандартна задача Gradle, яка компілює код, запускає тести тощо.
       - name: Build with Gradle
         run: ./gradlew build # Запуск Gradle через Wrapper
 
-      # (Необов'язково) Крок 5: Завантаження артефактів збірки
-      # Якщо ви хочете, щоб .jar файл вашого моду був доступний як артефакт
-      # після успішної збірки на GitHub Actions
+      # Крок 5: Завантаження артефактів збірки (Необов'язково)
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macromenu-build-artifacts # Назва артефакту
-          path: build/libs/*.jar # Шлях до вашого .jar файлу після збірки
+          path: build/libs/*.jar # Шлях до .jar файлу після збірки
           retention-days: 7 # Зберігати артефакти 7 днів

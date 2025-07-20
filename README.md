@@ -1,7 +1,7 @@
 [![MacroMenu](https://github.com/inasai/MacroMenu/actions/workflows/modBuild.yml/badge.svg)](https://github.com/inasai/MacroMenu/actions/workflows/modBuild.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-# MacroMenu
+# ![banner.png](images/banner.png)
 
-[//]: # (![MacroMenu Banner]&#40;link-to-your-banner-image.png&#41;)
+# MacroMenu
 
 ---
 
@@ -33,6 +33,9 @@
 ---
 
 ## Installation
+[![CurseForge](https://img.shields.io/badge/CurseForge-Download-orange?logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/macromenu)
+
+[![Modrinth](https://img.shields.io/badge/Modrinth-Download-5da545?logo=modrinth&logoColor=white)](https://modrinth.com/mod/macromenu)
 
 1.  **Ensure you have Minecraft Forge installed** for Minecraft 1.20.1.
 2.  **Download** the MacroMenu `.jar` file from one of the links below.
