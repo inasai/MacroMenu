@@ -39,5 +39,13 @@
 
   "gui.slider.value": "%s%%",
   "macromenu.gui.command_delay": "Затримка команди: %s секунд",
-  "macromenu.gui.command_delay_tooltip": "Встановлює затримку в секундах перед виконанням команди."
+  "macromenu.gui.command_delay_tooltip": "Встановлює затримку в секундах перед виконанням команди.",
+
+  "macromenu.notification.success.title": "Успіх",
+  "macromenu.notification.error.title": "Помилка",
+  "macromenu.notification.add_macro.success": "Макрос '%s' успішно додано.",
+  "macromenu.notification.add_macro.error": "Назва та команда макросу не можуть бути порожніми.",
+  "macromenu.notification.edit_macro.success": "Макрос '%s' успішно оновлено.",
+  "macromenu.notification.edit_macro.error": "Назва та команда макросу не можуть бути порожніми.",
+  "macromenu.notification.delete_macro.success": "Макрос '%s' успішно видалено."
 }

@@ -35,6 +35,10 @@ public class ConfirmDeleteScreen extends BaseMacroScreen {
                 Component.translatable("macromenu.gui.yes"),
                 btn -> {
                     ModConfig.removeMacro(macroIndex);
+                    NotificationManager.showSuccess(
+                            Component.translatable("macromenu.notification.success.title"),
+                            Component.translatable("macromenu.notification.delete_macro.success", macroData.getLabel())
+                    );
                     this.minecraft.setScreen(new SelectMacroScreen(parentScreen, SelectMacroScreen.Mode.DELETE));
                 }
         ).bounds(centerX - buttonWidth - 10, this.height / 2 + 20, buttonWidth, buttonHeight).build());

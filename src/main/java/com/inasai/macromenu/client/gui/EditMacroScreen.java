@@ -50,7 +50,17 @@ public class EditMacroScreen extends BaseMacroScreen {
                     String newCommand = commandField.getValue();
                     if (!newLabel.isEmpty() && !newCommand.isEmpty()) {
                         ModConfig.updateMacro(macroIndex, new MacroButtonData(newLabel, newCommand));
+                        NotificationManager.showSuccess(
+                                Component.translatable("macromenu.notification.success.title"),
+                                Component.translatable("macromenu.notification.edit_macro.success", newLabel)
+                        );
                         this.minecraft.setScreen(parentScreen);
+                    } else {
+                        // Додаємо виклик повідомлення про помилку
+                        NotificationManager.showError(
+                                Component.translatable("macromenu.notification.error.title"),
+                                Component.translatable("macromenu.notification.edit_macro.error")
+                        );
                     }
                 }
         ).bounds(centerX - 100, startY + spacing * 2, 95, buttonHeight).build());

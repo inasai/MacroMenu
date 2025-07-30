@@ -22,7 +22,7 @@ public class MacroButtonWidget extends Button {
         this.data = data;
     }
 
-    private static int calculateWidth(String label) {
+    public static int calculateWidth(String label) {
         // Отримуємо коефіцієнт масштабування з конфігурації
         double scale = ModConfig.getButtonSize().getScale();
         Minecraft minecraft = Minecraft.getInstance();

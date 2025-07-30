@@ -39,5 +39,13 @@
 
   "gui.slider.value": "%s%%",
   "macromenu.gui.command_delay": "Command Delay: %s seconds",
-  "macromenu.gui.command_delay_tooltip": "Sets the delay in seconds before a command executes."
+  "macromenu.gui.command_delay_tooltip": "Sets the delay in seconds before a command executes.",
+
+  "macromenu.notification.success.title": "Success",
+  "macromenu.notification.error.title": "Error",
+  "macromenu.notification.add_macro.success": "Macro '%s' added successfully.",
+  "macromenu.notification.add_macro.error": "Macro label and command cannot be empty.",
+  "macromenu.notification.edit_macro.success": "Macro '%s' updated successfully.",
+  "macromenu.notification.edit_macro.error": "Macro label and command cannot be empty.",
+  "macromenu.notification.delete_macro.success": "Macro '%s' deleted successfully."
 }

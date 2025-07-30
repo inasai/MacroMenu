@@ -11,11 +11,13 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.ArrayList; // Додаємо цей імпорт
 import javax.annotation.Nonnull;
 
 public class MacroMenuScreen extends BaseMacroScreen {
 
-    private static final int BASE_BUTTON_SPACING_Y = 24;
+    private static final int BASE_BUTTON_SPACING = 5; // Простір між кнопками
+    private static final int BASE_BUTTON_SPACING_Y = 24; // Простір між рядками
 
     public MacroMenuScreen() {
         super(Component.translatable("screen.macromenu.title"));
@@ -27,18 +29,18 @@ public class MacroMenuScreen extends BaseMacroScreen {
         this.clearWidgets();
 
         double currentScale = ModConfig.getButtonSize().getScale();
-        int scaledButtonHeight = (int)(MacroButtonWidget.BASE_BUTTON_HEIGHT * currentScale);
-        int scaledButtonSpacingY = (int)(BASE_BUTTON_SPACING_Y * currentScale);
-        int scaledMinButtonWidth = (int)(MacroButtonWidget.MIN_BUTTON_WIDTH * currentScale);
+        int scaledButtonHeight = (int) (MacroButtonWidget.BASE_BUTTON_HEIGHT * currentScale);
+        int scaledButtonSpacing = (int) (BASE_BUTTON_SPACING * currentScale);
+        int scaledButtonSpacingY = (int) (BASE_BUTTON_SPACING_Y * currentScale);
+        int scaledMinButtonWidth = (int) (MacroButtonWidget.MIN_BUTTON_WIDTH * currentScale);
 
+        // Кнопка налаштувань
         this.addRenderableWidget(Button.builder(
                 Component.translatable("macromenu.gui.settings"),
                 btn -> this.minecraft.setScreen(new ModSettingsScreen(this))
         ).bounds(this.width - 105, 10, 95, scaledButtonHeight).build());
 
         List<MacroButtonData> buttonDataList = ModConfig.getButtons();
-
-        int currentY = this.height / 4;
 
         if (buttonDataList.isEmpty()) {
             Component noMacrosText = Component.translatable("macromenu.gui.no_macros_message");
@@ -49,24 +51,54 @@ public class MacroMenuScreen extends BaseMacroScreen {
             this.addRenderableWidget(Button.builder(
                     noMacrosText,
                     btn -> {}
-            ).bounds(startX, currentY, calculatedWidth, scaledButtonHeight).build());
-            currentY += scaledButtonSpacingY;
+            ).bounds(startX, this.height / 2, calculatedWidth, scaledButtonHeight).build());
         } else {
-            for (MacroButtonData data : buttonDataList) {
-                MacroButtonWidget macroButton = new MacroButtonWidget(
-                        0, 0,
-                        data,
-                        btn -> runCommand(data.getCommand())
-                );
-                int startX = this.width / 2 - macroButton.getWidth() / 2;
-                macroButton.setX(startX);
-                macroButton.setY(currentY);
+            // Нова логіка для розміщення кнопок з центрованим вирівнюванням по рядках
+            int currentY = this.height / 2 - scaledButtonHeight / 2;
+            int availableWidth = this.width - scaledButtonSpacing * 2;
+            List<List<MacroButtonData>> rows = new ArrayList<>();
+            List<MacroButtonData> currentRow = new ArrayList<>();
+            int currentRowWidth = 0;
 
-                this.addRenderableWidget(macroButton);
-                currentY += scaledButtonSpacingY;
+            // Групуємо кнопки по рядках
+            for (MacroButtonData data : buttonDataList) {
+                int buttonWidth = MacroButtonWidget.calculateWidth(data.getLabel());
+                if (currentRowWidth + buttonWidth + (currentRow.isEmpty() ? 0 : scaledButtonSpacing) > availableWidth) {
+                    rows.add(currentRow);
+                    currentRow = new ArrayList<>();
+                    currentRowWidth = 0;
+                }
+                currentRow.add(data);
+                currentRowWidth += buttonWidth + (currentRow.size() == 1 ? 0 : scaledButtonSpacing);
+            }
+            if (!currentRow.isEmpty()) {
+                rows.add(currentRow);
+            }
+
+            // Розраховуємо загальну висоту кнопок для вертикального центрування
+            int totalHeight = (rows.size() * scaledButtonHeight) + ((rows.size() - 1) * scaledButtonSpacingY);
+            currentY = (this.height / 2) - (totalHeight / 2);
+
+            // Розміщуємо кнопки, центруємо кожен рядок
+            for (List<MacroButtonData> row : rows) {
+                int rowWidth = (row.stream().mapToInt(d -> MacroButtonWidget.calculateWidth(d.getLabel())).sum()) + (row.size() - 1) * scaledButtonSpacing;
+                int startX = (this.width / 2) - (rowWidth / 2);
+
+                int buttonX = startX;
+                for (MacroButtonData data : row) {
+                    MacroButtonWidget macroButton = new MacroButtonWidget(
+                            buttonX, currentY,
+                            data,
+                            btn -> runCommand(data.getCommand())
+                    );
+                    this.addRenderableWidget(macroButton);
+                    buttonX += macroButton.getWidth() + scaledButtonSpacing;
+                }
+                currentY += scaledButtonHeight + scaledButtonSpacingY;
             }
         }
 
+        // Кнопки керування
         Component addButtonText = Component.translatable("macromenu.gui.add");
         Component editButtonText = Component.translatable("macromenu.gui.edit");
         Component deleteButtonText = Component.translatable("macromenu.gui.delete");
@@ -82,24 +114,24 @@ public class MacroMenuScreen extends BaseMacroScreen {
         int totalControlButtonsWidth = addWidth + editWidth + deleteWidth + (MacroButtonWidget.PADDING_X * 2);
         int controlButtonY = this.height - 40;
 
-        int startX = this.width / 2 - totalControlButtonsWidth / 2;
+        int startX_control = this.width / 2 - totalControlButtonsWidth / 2;
 
         this.addRenderableWidget(Button.builder(
                 addButtonText,
                 btn -> this.minecraft.setScreen(new AddMacroScreen(this))
-        ).bounds(startX, controlButtonY, addWidth, scaledButtonHeight).build());
+        ).bounds(startX_control, controlButtonY, addWidth, scaledButtonHeight).build());
 
-        startX += addWidth + MacroButtonWidget.PADDING_X;
+        startX_control += addWidth + MacroButtonWidget.PADDING_X;
         this.addRenderableWidget(Button.builder(
                 editButtonText,
                 btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.EDIT))
-        ).bounds(startX, controlButtonY, editWidth, scaledButtonHeight).build());
+        ).bounds(startX_control, controlButtonY, editWidth, scaledButtonHeight).build());
 
-        startX += editWidth + MacroButtonWidget.PADDING_X;
+        startX_control += editWidth + MacroButtonWidget.PADDING_X;
         this.addRenderableWidget(Button.builder(
                 deleteButtonText,
                 btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.DELETE))
-        ).bounds(startX, controlButtonY, deleteWidth, scaledButtonHeight).build());
+        ).bounds(startX_control, controlButtonY, deleteWidth, scaledButtonHeight).build());
     }
 
     private void runCommand(String command) {
@@ -117,18 +149,6 @@ public class MacroMenuScreen extends BaseMacroScreen {
             this.onClose();
         }
     }
-
-    // Видаляємо дублюючий метод render, оскільки він тепер є в BaseMacroScreen
-    /*
-    @Override
-    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
-        int backgroundColor = (alpha << 24) | (0x000000);
-        guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-    }
-    */
 
     @Override
     public boolean isPauseScreen() {

@@ -41,7 +41,17 @@ public class AddMacroScreen extends BaseMacroScreen {
                 button -> {
                     if (!labelEditBox.getValue().isEmpty() && !commandEditBox.getValue().isEmpty()) {
                         ModConfig.addMacro(new MacroButtonData(labelEditBox.getValue(), commandEditBox.getValue()));
+                        NotificationManager.showSuccess(
+                                Component.translatable("macromenu.notification.success.title"),
+                                Component.translatable("macromenu.notification.add_macro.success", labelEditBox.getValue())
+                        );
                         this.minecraft.setScreen(parentScreen);
+                    } else {
+                        // Додаємо виклик повідомлення про помилку
+                        NotificationManager.showError(
+                                Component.translatable("macromenu.notification.error.title"),
+                                Component.translatable("macromenu.notification.add_macro.error")
+                        );
                     }
                 }
         ).bounds(centerX - buttonWidth - 5, this.height - 40, buttonWidth, buttonHeight).build());
