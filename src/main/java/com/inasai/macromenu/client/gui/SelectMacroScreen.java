@@ -36,6 +36,7 @@ public class SelectMacroScreen extends BaseMacroScreen {
         super.init();
         this.clearWidgets();
 
+        // Отримуємо кнопки з активної вкладки
         List<MacroButtonData> buttonDataList = ModConfig.getButtons();
         int currentY = this.height / 4;
         int buttonHeight = (int)(MacroButtonWidget.BASE_BUTTON_HEIGHT * ModConfig.getButtonSize().getScale());
@@ -80,18 +81,6 @@ public class SelectMacroScreen extends BaseMacroScreen {
                 btn -> this.minecraft.setScreen(parentScreen)
         ).bounds(this.width / 2 - 100, this.height - 40, 200, buttonHeight).build());
     }
-
-    // Видаляємо дублюючий метод render, оскільки він тепер є в BaseMacroScreen
-    /*
-    @Override
-    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
-        int backgroundColor = (alpha << 24) | (0x000000);
-        guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-    }
-    */
 
     @Override
     public boolean isPauseScreen() {

@@ -10,14 +10,14 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList; // Додаємо цей імпорт
 import javax.annotation.Nonnull;
 
 public class MacroMenuScreen extends BaseMacroScreen {
 
-    private static final int BASE_BUTTON_SPACING = 5; // Простір між кнопками
-    private static final int BASE_BUTTON_SPACING_Y = 24; // Простір між рядками
+    private static final int BASE_BUTTON_SPACING = 5;
+    private static final int BASE_BUTTON_SPACING_Y = 24;
 
     public MacroMenuScreen() {
         super(Component.translatable("screen.macromenu.title"));
@@ -41,7 +41,27 @@ public class MacroMenuScreen extends BaseMacroScreen {
         ).bounds(this.width - 105, 10, 95, scaledButtonHeight).build());
 
         List<MacroButtonData> buttonDataList = ModConfig.getButtons();
+        int availableWidth = this.width - scaledButtonSpacing * 2;
 
+        // --- Логіка відображення вкладок ---
+        int tabButtonWidth = 80;
+        int tabButtonY = 10;
+        int tabButtonX = 10;
+
+        for (ModConfig.TabConfig tab : ModConfig.getTabs()) {
+            this.addRenderableWidget(new TabButton(
+                    tabButtonX, tabButtonY, tabButtonWidth, scaledButtonHeight,
+                    Component.literal(tab.name),
+                    btn -> {
+                        ModConfig.setActiveTab(tab.name);
+                        this.minecraft.setScreen(new MacroMenuScreen());
+                    },
+                    tab.name.equals(ModConfig.getActiveTab().name)
+            ));
+            tabButtonX += tabButtonWidth + 5;
+        }
+
+        // --- Логіка для головних кнопок ---
         if (buttonDataList.isEmpty()) {
             Component noMacrosText = Component.translatable("macromenu.gui.no_macros_message");
             int textWidth = this.font.width(noMacrosText);
@@ -53,14 +73,11 @@ public class MacroMenuScreen extends BaseMacroScreen {
                     btn -> {}
             ).bounds(startX, this.height / 2, calculatedWidth, scaledButtonHeight).build());
         } else {
-            // Нова логіка для розміщення кнопок з центрованим вирівнюванням по рядках
             int currentY = this.height / 2 - scaledButtonHeight / 2;
-            int availableWidth = this.width - scaledButtonSpacing * 2;
             List<List<MacroButtonData>> rows = new ArrayList<>();
             List<MacroButtonData> currentRow = new ArrayList<>();
             int currentRowWidth = 0;
 
-            // Групуємо кнопки по рядках
             for (MacroButtonData data : buttonDataList) {
                 int buttonWidth = MacroButtonWidget.calculateWidth(data.getLabel());
                 if (currentRowWidth + buttonWidth + (currentRow.isEmpty() ? 0 : scaledButtonSpacing) > availableWidth) {
@@ -75,11 +92,9 @@ public class MacroMenuScreen extends BaseMacroScreen {
                 rows.add(currentRow);
             }
 
-            // Розраховуємо загальну висоту кнопок для вертикального центрування
             int totalHeight = (rows.size() * scaledButtonHeight) + ((rows.size() - 1) * scaledButtonSpacingY);
             currentY = (this.height / 2) - (totalHeight / 2);
 
-            // Розміщуємо кнопки, центруємо кожен рядок
             for (List<MacroButtonData> row : rows) {
                 int rowWidth = (row.stream().mapToInt(d -> MacroButtonWidget.calculateWidth(d.getLabel())).sum()) + (row.size() - 1) * scaledButtonSpacing;
                 int startX = (this.width / 2) - (rowWidth / 2);
@@ -138,11 +153,12 @@ public class MacroMenuScreen extends BaseMacroScreen {
         if (minecraft != null && minecraft.getConnection() != null) {
             double delaySeconds = ModConfig.getCommandDelaySeconds();
             if (delaySeconds > 0) {
+                // Виправлений рядок: додаємо TimeUnit.MILLISECONDS
                 MacroMenu.SCHEDULER.schedule(() -> {
                     if (minecraft.getConnection() != null) {
                         minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
                     }
-                }, (long) (delaySeconds * 1000));
+                }, (long) (delaySeconds * 1000), java.util.concurrent.TimeUnit.MILLISECONDS);
             } else {
                 minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
             }
