@@ -18,7 +18,6 @@ public class TabButton extends Button {
         super(x, y, width, height, message, onPress, DEFAULT_NARRATION);
         this.isActive = isActive;
         this.parentScreen = parentScreen;
-        // Виправлення: використовуємо Minecraft.getInstance().font
         this.editBox = new EditBox(Minecraft.getInstance().font, this.getX(), this.getY(), this.getWidth(), this.getHeight(), Component.literal(""));
         this.editBox.setMaxLength(32);
         this.editBox.setValue(message.getString());
@@ -33,7 +32,8 @@ public class TabButton extends Button {
     public void enterEditMode() {
         if (isActive) {
             this.editBox.visible = true;
-            this.editBox.setFocused(true);
+            this.editBox.setFocused(true); // Виправлено: викликаємо setFocused на EditBox
+            // Не потрібно викликати setFocused на Minecraft.getInstance()
         }
     }
 
@@ -68,7 +68,8 @@ public class TabButton extends Button {
             Minecraft.getInstance().setScreen(new MacroMenuScreen());
         }
         editBox.visible = false;
-        editBox.setFocused(false);
+        editBox.setFocused(false); // Виправлено: викликаємо setFocused на EditBox
+        // Не потрібно викликати getFocused або setFocused на Minecraft.getInstance()
     }
 
     @Override
@@ -78,7 +79,6 @@ public class TabButton extends Button {
         if (editBox.visible) {
             editBox.render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            // Виправлення: використовуємо Minecraft.getInstance().font
             int textColor = 0xFFFFFF;
             if (isActive) {
                 textColor = 0xFFFF00; // Жовтий колір для активної вкладки

@@ -13,6 +13,7 @@ import com.inasai.macromenu.MacroMenu;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+// net.minecraft.resources.ResourceLocation більше не потрібен для фону цього екрану
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class MacroMenuScreen extends BaseMacroScreen {
         }
 
         Button renameTabButton = Button.builder(
-                Component.literal("✎"),
+                Component.literal("✎"), // Символ олівця для редагування
                 btn -> {
                     if (activeTabButton != null) {
                         activeTabButton.enterEditMode();
@@ -114,13 +115,12 @@ public class MacroMenuScreen extends BaseMacroScreen {
                 int macroButtonX = this.width / 2 - totalMacroButtonWidth / 2;
                 int iconButtonX = macroButtonX + scaledButtonWidth + MacroButtonWidget.BASE_BUTTON_SPACING;
 
-                // Змінено: передаємо 'this' як посилання на MacroMenuScreen
                 this.addRenderableWidget(new MacroButtonWidget(
                         macroButtonX,
                         buttonY_middle,
                         data,
                         data.getColor(),
-                        this
+                        this // Передаємо посилання на MacroMenuScreen
                 ));
 
                 this.addRenderableWidget(Button.builder(
@@ -160,11 +160,15 @@ public class MacroMenuScreen extends BaseMacroScreen {
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        // Рендеримо весь фон екрану з прозорістю з ModConfig
         int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
-        int backgroundColor = (alpha << 24) | (0x000000);
+        int backgroundColor = (alpha << 24) | (0x000000); // Чорний колір з заданою прозорістю
         guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
 
+        // Малюємо заголовок
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 5, 0xFFFFFF);
+
+        // Викликаємо супер-метод для рендерингу віджетів (кнопки, вкладки тощо)
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
