@@ -1,6 +1,6 @@
 package com.inasai.macromenu.client.gui;
 
-import com.inasai.macromenu.config.ModConfig; // Додаємо імпорт
+import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import javax.annotation.Nonnull;
 
-public class ConfirmDeleteScreen extends Screen {
+public class ConfirmDeleteScreen extends BaseMacroScreen {
     private final Screen parentScreen;
     private final int macroIndex;
     private final MacroButtonData macroData;
@@ -19,7 +19,6 @@ public class ConfirmDeleteScreen extends Screen {
         this.parentScreen = parentScreen;
         this.macroIndex = macroIndex;
         this.macroData = macroData;
-        // Форматуємо повідомлення з назвою макросу
         this.message = Component.translatable("macromenu.gui.confirm_delete_message", macroData.getLabel());
     }
 
@@ -48,15 +47,10 @@ public class ConfirmDeleteScreen extends Screen {
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
-        int backgroundColor = (alpha << 24) | (0x000000);
-        guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-
-        // ВИПРАВЛЕНО: З guiGraphics.font на this.font
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
-        // ВИПРАВЛЕНО: З guiGraphics.font на this.font
-        guiGraphics.drawCenteredString(this.font, this.message, this.width / 2, this.height / 2 - 20, 0xFFFFFF);
+        // Викликаємо метод батьківського класу для рендерингу фону та заголовка
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+
+        guiGraphics.drawCenteredString(this.font, this.message, this.width / 2, this.height / 2 - 20, 0xFFFFFF);
     }
 
     @Override

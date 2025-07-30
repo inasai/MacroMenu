@@ -1,0 +1,1 @@
+(echo '# Architecture'; echo '```text'; tree -L 10 -I "generated|test" ; echo '```') | sed 's/\xC2\xA0/ /g' > ../projectArchitecture.md

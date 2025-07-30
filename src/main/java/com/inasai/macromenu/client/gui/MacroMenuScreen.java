@@ -13,9 +13,8 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-public class MacroMenuScreen extends Screen {
+public class MacroMenuScreen extends BaseMacroScreen {
 
-    // Оновлюємо BUTTON_SPACING_Y, щоб врахувати масштабовану висоту
     private static final int BASE_BUTTON_SPACING_Y = 24;
 
     public MacroMenuScreen() {
@@ -27,14 +26,11 @@ public class MacroMenuScreen extends Screen {
         super.init();
         this.clearWidgets();
 
-        // Отримуємо поточний масштаб кнопки
         double currentScale = ModConfig.getButtonSize().getScale();
         int scaledButtonHeight = (int)(MacroButtonWidget.BASE_BUTTON_HEIGHT * currentScale);
         int scaledButtonSpacingY = (int)(BASE_BUTTON_SPACING_Y * currentScale);
         int scaledMinButtonWidth = (int)(MacroButtonWidget.MIN_BUTTON_WIDTH * currentScale);
 
-        // --- Кнопка налаштувань ---
-        // Використовуємо scaledButtonHeight для висоти кнопки налаштувань
         this.addRenderableWidget(Button.builder(
                 Component.translatable("macromenu.gui.settings"),
                 btn -> this.minecraft.setScreen(new ModSettingsScreen(this))
@@ -47,18 +43,16 @@ public class MacroMenuScreen extends Screen {
         if (buttonDataList.isEmpty()) {
             Component noMacrosText = Component.translatable("macromenu.gui.no_macros_message");
             int textWidth = this.font.width(noMacrosText);
-            // Використовуємо scaledMinButtonWidth
             int calculatedWidth = Math.max(scaledMinButtonWidth, textWidth + MacroButtonWidget.PADDING_X * 2);
             int startX = this.width / 2 - calculatedWidth / 2;
 
             this.addRenderableWidget(Button.builder(
                     noMacrosText,
                     btn -> {}
-            ).bounds(startX, currentY, calculatedWidth, scaledButtonHeight).build()); // Використовуємо scaledButtonHeight
-            currentY += scaledButtonSpacingY; // Використовуємо scaledButtonSpacingY
+            ).bounds(startX, currentY, calculatedWidth, scaledButtonHeight).build());
+            currentY += scaledButtonSpacingY;
         } else {
             for (MacroButtonData data : buttonDataList) {
-                // MacroButtonWidget сам розрахує свою ширину/висоту на основі ModConfig
                 MacroButtonWidget macroButton = new MacroButtonWidget(
                         0, 0,
                         data,
@@ -69,7 +63,7 @@ public class MacroMenuScreen extends Screen {
                 macroButton.setY(currentY);
 
                 this.addRenderableWidget(macroButton);
-                currentY += scaledButtonSpacingY; // Використовуємо scaledButtonSpacingY
+                currentY += scaledButtonSpacingY;
             }
         }
 
@@ -77,16 +71,13 @@ public class MacroMenuScreen extends Screen {
         Component editButtonText = Component.translatable("macromenu.gui.edit");
         Component deleteButtonText = Component.translatable("macromenu.gui.delete");
 
-        // Розраховуємо ширину кнопок керування на основі масштабу
         int addWidth = (int) (MacroButtonWidget.BASE_BUTTON_WIDTH / 2 * currentScale);
         int editWidth = (int) (MacroButtonWidget.BASE_BUTTON_WIDTH / 2 * currentScale);
         int deleteWidth = (int) (MacroButtonWidget.BASE_BUTTON_WIDTH / 2 * currentScale);
 
-        // Переконаємося, що текст поміщається
         addWidth = Math.max(addWidth, this.font.width(addButtonText) + MacroButtonWidget.PADDING_X * 2);
         editWidth = Math.max(editWidth, this.font.width(editButtonText) + MacroButtonWidget.PADDING_X * 2);
         deleteWidth = Math.max(deleteWidth, this.font.width(deleteButtonText) + MacroButtonWidget.PADDING_X * 2);
-
 
         int totalControlButtonsWidth = addWidth + editWidth + deleteWidth + (MacroButtonWidget.PADDING_X * 2);
         int controlButtonY = this.height - 40;
@@ -96,49 +87,48 @@ public class MacroMenuScreen extends Screen {
         this.addRenderableWidget(Button.builder(
                 addButtonText,
                 btn -> this.minecraft.setScreen(new AddMacroScreen(this))
-        ).bounds(startX, controlButtonY, addWidth, scaledButtonHeight).build()); // Використовуємо scaledButtonHeight
+        ).bounds(startX, controlButtonY, addWidth, scaledButtonHeight).build());
 
         startX += addWidth + MacroButtonWidget.PADDING_X;
         this.addRenderableWidget(Button.builder(
                 editButtonText,
                 btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.EDIT))
-        ).bounds(startX, controlButtonY, editWidth, scaledButtonHeight).build()); // Використовуємо scaledButtonHeight
+        ).bounds(startX, controlButtonY, editWidth, scaledButtonHeight).build());
 
         startX += editWidth + MacroButtonWidget.PADDING_X;
         this.addRenderableWidget(Button.builder(
                 deleteButtonText,
                 btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.DELETE))
-        ).bounds(startX, controlButtonY, deleteWidth, scaledButtonHeight).build()); // Використовуємо scaledButtonHeight
+        ).bounds(startX, controlButtonY, deleteWidth, scaledButtonHeight).build());
     }
 
     private void runCommand(String command) {
         if (minecraft != null && minecraft.getConnection() != null) {
             double delaySeconds = ModConfig.getCommandDelaySeconds();
             if (delaySeconds > 0) {
-                // Затримка виконання команди
-                // Використовуємо SimpleScheduler для відкладеного виконання
                 MacroMenu.SCHEDULER.schedule(() -> {
                     if (minecraft.getConnection() != null) {
                         minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
                     }
-                }, (long) (delaySeconds * 1000)); // Перетворюємо секунди в мілісекунди
+                }, (long) (delaySeconds * 1000));
             } else {
-                // Миттєве виконання
                 minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
             }
             this.onClose();
         }
     }
 
+    // Видаляємо дублюючий метод render, оскільки він тепер є в BaseMacroScreen
+    /*
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
         int backgroundColor = (alpha << 24) | (0x000000);
         guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-
         guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
+    */
 
     @Override
     public boolean isPauseScreen() {

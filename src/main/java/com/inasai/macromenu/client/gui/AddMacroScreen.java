@@ -1,6 +1,6 @@
 package com.inasai.macromenu.client.gui;
 
-import com.inasai.macromenu.config.ModConfig; // Додаємо імпорт
+import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import javax.annotation.Nonnull;
 
-public class AddMacroScreen extends Screen {
+public class AddMacroScreen extends BaseMacroScreen {
     private final Screen parentScreen;
     private EditBox labelEditBox;
     private EditBox commandEditBox;
@@ -28,11 +28,11 @@ public class AddMacroScreen extends Screen {
         int buttonWidth = 150;
         int buttonHeight = (int)(MacroButtonWidget.BASE_BUTTON_HEIGHT * ModConfig.getButtonSize().getScale());
 
-        this.labelEditBox = new EditBox(this.font, centerX - 150, 75, 300, 20, Component.translatable("macromenu.gui.label")); // ВИПРАВЛЕНО: З guiGraphics.font на this.font
+        this.labelEditBox = new EditBox(this.font, centerX - 150, 75, 300, 20, Component.translatable("macromenu.gui.label"));
         this.labelEditBox.setMaxLength(32);
         this.addRenderableWidget(this.labelEditBox);
 
-        this.commandEditBox = new EditBox(this.font, centerX - 150, 125, 300, 20, Component.translatable("macromenu.gui.command")); // ВИПРАВЛЕНО: З guiGraphics.font на this.font
+        this.commandEditBox = new EditBox(this.font, centerX - 150, 125, 300, 20, Component.translatable("macromenu.gui.command"));
         this.commandEditBox.setMaxLength(256);
         this.addRenderableWidget(this.commandEditBox);
 
@@ -54,19 +54,11 @@ public class AddMacroScreen extends Screen {
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
-        int backgroundColor = (alpha << 24) | (0x000000);
-        guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-
-        // ВИПРАВЛЕНО: З guiGraphics.font на this.font
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
-        this.labelEditBox.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.commandEditBox.render(guiGraphics, mouseX, mouseY, partialTicks);
-        // ВИПРАВЛЕНО: З guiGraphics.font на this.font
-        guiGraphics.drawString(this.font, Component.translatable("macromenu.gui.label"), this.width / 2 - 150, 60, 0xFFFFFF);
-        // ВИПРАВЛЕНО: З guiGraphics.font на this.font
-        guiGraphics.drawString(this.font, Component.translatable("macromenu.gui.command"), this.width / 2 - 150, 110, 0xFFFFFF);
+        // Викликаємо метод батьківського класу для рендерингу фону та заголовка
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+
+        guiGraphics.drawString(this.font, Component.translatable("macromenu.gui.label"), this.width / 2 - 150, 60, 0xFFFFFF);
+        guiGraphics.drawString(this.font, Component.translatable("macromenu.gui.command"), this.width / 2 - 150, 110, 0xFFFFFF);
     }
 
     @Override

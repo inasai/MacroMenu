@@ -10,9 +10,9 @@ import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
-import com.inasai.macromenu.client.gui.CommandDelaySliderWidget; // Додай цей рядок
+import com.inasai.macromenu.client.gui.CommandDelaySliderWidget;
 
-public class ModSettingsScreen extends Screen {
+public class ModSettingsScreen extends BaseMacroScreen {
     private final Screen parentScreen;
     private Button toggleTooltipsButton;
     private TransparencySliderWidget transparencySlider;
@@ -35,7 +35,6 @@ public class ModSettingsScreen extends Screen {
         int buttonHeight = MacroButtonWidget.BASE_BUTTON_HEIGHT;
         int spacing = 24;
 
-        // --- Кнопка перемикання підказок ---
         this.toggleTooltipsButton = Button.builder(
                 getTooltipButtonText(),
                 btn -> {
@@ -45,7 +44,6 @@ public class ModSettingsScreen extends Screen {
         ).bounds(centerX - buttonWidth / 2, startY, buttonWidth, buttonHeight).build();
         this.addRenderableWidget(this.toggleTooltipsButton);
 
-        // --- Слайдер прозорості фону ---
         this.transparencySlider = new TransparencySliderWidget(
                 centerX - buttonWidth / 2,
                 startY + spacing,
@@ -56,7 +54,6 @@ public class ModSettingsScreen extends Screen {
         );
         this.addRenderableWidget(this.transparencySlider);
 
-        // --- Кнопка циклічного перемикання розміру кнопок ---
         this.buttonSizeCycleButton = CycleButton.builder(
                         (ModConfig.ButtonSize buttonSizeEnum) ->
                                 Component.translatable("macromenu.gui.button_size",
@@ -68,28 +65,21 @@ public class ModSettingsScreen extends Screen {
                         Component.translatable("macromenu.gui.button_size",
                                 Component.translatable("macromenu.gui.button_size." + ModConfig.getButtonSize().name().toLowerCase())),
                         (button, currentValue) -> {
-                            ModConfig.ButtonSize nextSize = currentValue.next();
-                            ModConfig.setButtonSize(nextSize);
-                            button.setMessage(Component.translatable("macromenu.gui.button_size",
-                                    Component.translatable("macromenu.gui.button_size." + nextSize.name().toLowerCase())));
-                            this.minecraft.setScreen(new ModSettingsScreen(this.parentScreen));
+                            ModConfig.setButtonSize(currentValue); // Змінюємо на currentValue
+                            // this.minecraft.setScreen(new ModSettingsScreen(this.parentScreen)); // Видаляємо це
                         });
         this.addRenderableWidget(this.buttonSizeCycleButton);
 
-        // --- Слайдер затримки виконання команди ---
         this.commandDelaySlider = new CommandDelaySliderWidget(
                 centerX - buttonWidth / 2,
                 startY + spacing * 3,
                 buttonWidth,
                 buttonHeight,
-                // Передаємо поточне значення затримки, нормалізоване до діапазону 0.0-1.0
                 ModConfig.getCommandDelaySeconds() / 60.0D,
-                // Consumer, який буде викликаний, коли значення слайдера зміниться
                 value -> ModConfig.setCommandDelaySeconds(Mth.clamp(value, 0.0D, 60.0D))
         );
         this.addRenderableWidget(this.commandDelaySlider);
 
-        // --- Кнопка "Назад" ---
         this.addRenderableWidget(Button.builder(
                 Component.translatable("macromenu.gui.back"),
                 btn -> this.minecraft.setScreen(this.parentScreen)
@@ -103,10 +93,9 @@ public class ModSettingsScreen extends Screen {
         );
     }
 
+    // Переносимо рендеринг фону в базовий клас
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
-        guiGraphics.drawCenteredString(font, this.title, this.width / 2, 20, 0xFFFFFF);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
         // --- РУЧНА РЕАЛІЗАЦІЯ ПІДКАЗКИ ДЛЯ КНОПКИ РОЗМІРУ ---
