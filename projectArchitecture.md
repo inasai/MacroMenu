@@ -9,15 +9,26 @@
     │               ├── client
     │               │   ├── ClientEvents.java
     │               │   ├── gui
-    │               │   │   ├── AddMacroScreen.java
-    │               │   │   ├── CommandDelaySliderWidget.java
-    │               │   │   ├── ConfirmDeleteScreen.java
-    │               │   │   ├── EditMacroScreen.java
-    │               │   │   ├── MacroButtonWidget.java
+    │               │   │   ├── BaseMacroScreen.java
     │               │   │   ├── MacroMenuScreen.java
+    │               │   │   ├── macros
+    │               │   │   │   ├── AddMacroScreen.java
+    │               │   │   │   ├── ConfirmDeleteScreen.java
+    │               │   │   │   ├── EditMacroScreen.java
+    │               │   │   │   ├── MacroButtonWidget.java
+    │               │   │   │   └── SelectMacroScreen.java
     │               │   │   ├── ModSettingsScreen.java
-    │               │   │   ├── SelectMacroScreen.java
-    │               │   │   └── TransparencySliderWidget.java
+    │               │   │   ├── NotificationManager.java
+    │               │   │   ├── tabs
+    │               │   │   │   ├── AddTabScreen.java
+    │               │   │   │   ├── ConfirmDeleteTabScreen.java
+    │               │   │   │   ├── EditTabScreen.java
+    │               │   │   │   ├── SelectTabScreen.java
+    │               │   │   │   └── TabButton.java
+    │               │   │   └── widgets
+    │               │   │       ├── CommandDelaySliderWidget.java
+    │               │   │       ├── GuiNotification.java
+    │               │   │       └── TransparencySliderWidget.java
     │               │   └── KeyBindings.java
     │               ├── config
     │               │   └── ModConfig.java
@@ -36,5 +47,5 @@
         │   └── mods.toml
         └── pack.mcmeta
 
-17 directories, 18 files
+20 directories, 26 files
 ```

@@ -4,11 +4,18 @@ import com.inasai.macromenu.config.ModConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import javax.annotation.Nonnull;
+
 
 import javax.annotation.Nonnull;
 
 public abstract class BaseMacroScreen extends Screen {
 
+    private static final ResourceLocation DIRT_TEXTURE = new ResourceLocation("minecraft", "textures/block/dirt.png");
     protected BaseMacroScreen(Component title) {
         super(title);
     }
@@ -21,7 +28,7 @@ public abstract class BaseMacroScreen extends Screen {
         guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
 
         // Малюємо заголовок
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
+//        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }

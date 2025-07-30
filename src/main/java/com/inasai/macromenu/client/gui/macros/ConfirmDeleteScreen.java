@@ -1,6 +1,7 @@
 package com.inasai.macromenu.client.gui.macros;
 
 import com.inasai.macromenu.client.gui.BaseMacroScreen;
+import com.inasai.macromenu.client.gui.MacroMenuScreen; // Додаємо імпорт MacroMenuScreen
 import com.inasai.macromenu.client.gui.NotificationManager;
 import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
@@ -41,21 +42,23 @@ public class ConfirmDeleteScreen extends BaseMacroScreen {
                             Component.translatable("macromenu.notification.success.title"),
                             Component.translatable("macromenu.notification.delete_macro.success", macroData.getLabel())
                     );
-                    this.minecraft.setScreen(new SelectMacroScreen(parentScreen, SelectMacroScreen.Mode.DELETE));
+                    // Виправлено: повертаємось до головного меню
+                    this.minecraft.setScreen(new MacroMenuScreen());
                 }
         ).bounds(centerX - buttonWidth - 10, this.height / 2 + 20, buttonWidth, buttonHeight).build());
 
         this.addRenderableWidget(Button.builder(
                 Component.translatable("macromenu.gui.no"),
-                btn -> this.minecraft.setScreen(new SelectMacroScreen(parentScreen, SelectMacroScreen.Mode.DELETE))
+                btn -> {
+                    // Виправлено: повертаємось до головного меню
+                    this.minecraft.setScreen(new MacroMenuScreen());
+                }
         ).bounds(centerX + 10, this.height / 2 + 20, buttonWidth, buttonHeight).build());
     }
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        // Викликаємо метод батьківського класу для рендерингу фону та заголовка
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-
         guiGraphics.drawCenteredString(this.font, this.message, this.width / 2, this.height / 2 - 20, 0xFFFFFF);
     }
 
