@@ -41,6 +41,21 @@
   "macromenu.gui.command_delay": "Затримка команди: %s секунд",
   "macromenu.gui.command_delay_tooltip": "Встановлює затримку в секундах перед виконанням команди.",
 
+  "screen.macromenu.add_tab": "Додати нову вкладку",
+  "screen.macromenu.confirm_delete_tab": "Підтвердити видалення",
+  "macromenu.gui.add_tab": "Додати вкладку",
+  "macromenu.gui.remove_tab": "Видалити вкладку",
+  "macromenu.gui.confirm_delete_tab_message": "Ви впевнені, що хочете видалити вкладку '%s' та всі її макроси?",
+
+  "screen.macromenu.edit_tab": "Перейменувати вкладку",
+  "macromenu.gui.add_tab": "Додати вкладку",
+  "macromenu.gui.remove_tab": "Видалити вкладку",
+  "macromenu.gui.edit_tab": "Перейменувати вкладку",
+
+  "macromenu.gui.move": "Перемістити",
+  "screen.macromenu.select_tab": "Оберіть вкладку для переміщення",
+  "macromenu.notification.macro_moved": "Макрос переміщено до вкладки '%s'",
+
   "macromenu.notification.success.title": "Успіх",
   "macromenu.notification.error.title": "Помилка",
   "macromenu.notification.add_macro.success": "Макрос '%s' успішно додано.",

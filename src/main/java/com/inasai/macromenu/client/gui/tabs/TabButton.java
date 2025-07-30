@@ -1,4 +1,4 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.tabs;
 
 import net.minecraft.client.Minecraft; // Додаємо цей імпорт
 import net.minecraft.client.gui.GuiGraphics;

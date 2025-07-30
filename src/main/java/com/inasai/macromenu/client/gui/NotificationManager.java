@@ -1,5 +1,6 @@
 package com.inasai.macromenu.client.gui;
 
+import com.inasai.macromenu.client.gui.widgets.GuiNotification;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 

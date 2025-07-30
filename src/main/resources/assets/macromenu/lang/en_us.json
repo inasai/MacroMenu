@@ -41,6 +41,21 @@
   "macromenu.gui.command_delay": "Command Delay: %s seconds",
   "macromenu.gui.command_delay_tooltip": "Sets the delay in seconds before a command executes.",
 
+  "screen.macromenu.add_tab": "Add New Tab",
+  "screen.macromenu.confirm_delete_tab": "Confirm Deletion",
+  "macromenu.gui.add_tab": "Add Tab",
+  "macromenu.gui.remove_tab": "Remove Tab",
+  "macromenu.gui.confirm_delete_tab_message": "Are you sure you want to delete the tab '%s' and all its macros?",
+
+  "screen.macromenu.edit_tab": "Rename Tab",
+  "macromenu.gui.add_tab": "Add Tab",
+  "macromenu.gui.remove_tab": "Remove Tab",
+  "macromenu.gui.edit_tab": "Rename Tab",
+
+  "macromenu.gui.move": "Move",
+  "screen.macromenu.select_tab": "Select Tab to Move",
+  "macromenu.notification.macro_moved": "Macro moved to tab '%s'",
+
   "macromenu.notification.success.title": "Success",
   "macromenu.notification.error.title": "Error",
   "macromenu.notification.add_macro.success": "Macro '%s' added successfully.",

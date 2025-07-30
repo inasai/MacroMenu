@@ -1,5 +1,7 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.macros;
 
+import com.inasai.macromenu.client.gui.BaseMacroScreen;
+import com.inasai.macromenu.client.gui.NotificationManager;
 import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
 import net.minecraft.client.gui.GuiGraphics;

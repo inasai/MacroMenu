@@ -1,18 +1,21 @@
 package com.inasai.macromenu.client.gui;
 
+import com.inasai.macromenu.client.gui.macros.AddMacroScreen;
+import com.inasai.macromenu.client.gui.macros.MacroButtonWidget;
+import com.inasai.macromenu.client.gui.macros.SelectMacroScreen;
+import com.inasai.macromenu.client.gui.tabs.AddTabScreen;
+import com.inasai.macromenu.client.gui.tabs.ConfirmDeleteTabScreen;
+import com.inasai.macromenu.client.gui.tabs.EditTabScreen;
+import com.inasai.macromenu.client.gui.tabs.TabButton;
 import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
 import com.inasai.macromenu.MacroMenu;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
+import java.util.concurrent.TimeUnit;
 
 public class MacroMenuScreen extends BaseMacroScreen {
 
@@ -34,14 +37,41 @@ public class MacroMenuScreen extends BaseMacroScreen {
         int scaledButtonSpacingY = (int) (BASE_BUTTON_SPACING_Y * currentScale);
         int scaledMinButtonWidth = (int) (MacroButtonWidget.MIN_BUTTON_WIDTH * currentScale);
 
-        // Кнопка налаштувань
-        this.addRenderableWidget(Button.builder(
-                Component.translatable("macromenu.gui.settings"),
-                btn -> this.minecraft.setScreen(new ModSettingsScreen(this))
-        ).bounds(this.width - 105, 10, 95, scaledButtonHeight).build());
+        // --- Кнопки керування вкладками та налаштування ---
+        int smallButtonWidth = scaledButtonHeight; // Робимо кнопки квадратними
+        int buttonY = 10;
+        int currentX = this.width - 10 - smallButtonWidth;
 
-        List<MacroButtonData> buttonDataList = ModConfig.getButtons();
-        int availableWidth = this.width - scaledButtonSpacing * 2;
+        // Кнопка налаштувань (іконка шестерні)
+        this.addRenderableWidget(Button.builder(
+                Component.literal("⚙"), // Простіший символ шестерні
+                btn -> this.minecraft.setScreen(new ModSettingsScreen(this))
+        ).bounds(currentX, buttonY, smallButtonWidth, scaledButtonHeight).build());
+
+        currentX -= smallButtonWidth + 5;
+
+        // Кнопка "Видалити вкладку" (іконка кошика)
+        if (ModConfig.getTabs().size() > 1) { // Можна видалити, лише якщо є більше однієї вкладки
+            this.addRenderableWidget(Button.builder(
+                    Component.literal("×"), // Простий символ "x"
+                    btn -> this.minecraft.setScreen(new ConfirmDeleteTabScreen(this, ModConfig.getActiveTab().name))
+            ).bounds(currentX, buttonY, smallButtonWidth, scaledButtonHeight).build());
+            currentX -= smallButtonWidth + 5;
+        }
+
+        // Кнопка "Редагувати вкладку"
+        this.addRenderableWidget(Button.builder(
+                Component.literal("!"), // Простий символ "!"
+                btn -> this.minecraft.setScreen(new EditTabScreen(this))
+        ).bounds(currentX, buttonY, smallButtonWidth, scaledButtonHeight).build());
+
+        currentX -= smallButtonWidth + 5;
+
+        // Кнопка "Додати вкладку" (іконка плюсика)
+        this.addRenderableWidget(Button.builder(
+                Component.literal("+"), // Простий символ "+"
+                btn -> this.minecraft.setScreen(new AddTabScreen(this))
+        ).bounds(currentX, buttonY, smallButtonWidth, scaledButtonHeight).build());
 
         // --- Логіка відображення вкладок ---
         int tabButtonWidth = 80;
@@ -60,6 +90,9 @@ public class MacroMenuScreen extends BaseMacroScreen {
             ));
             tabButtonX += tabButtonWidth + 5;
         }
+
+        List<MacroButtonData> buttonDataList = ModConfig.getButtons();
+        int availableWidth = this.width - scaledButtonSpacing * 2;
 
         // --- Логіка для головних кнопок ---
         if (buttonDataList.isEmpty()) {
@@ -113,7 +146,7 @@ public class MacroMenuScreen extends BaseMacroScreen {
             }
         }
 
-        // Кнопки керування
+        // --- Кнопки керування макросами ---
         Component addButtonText = Component.translatable("macromenu.gui.add");
         Component editButtonText = Component.translatable("macromenu.gui.edit");
         Component deleteButtonText = Component.translatable("macromenu.gui.delete");
@@ -126,9 +159,8 @@ public class MacroMenuScreen extends BaseMacroScreen {
         editWidth = Math.max(editWidth, this.font.width(editButtonText) + MacroButtonWidget.PADDING_X * 2);
         deleteWidth = Math.max(deleteWidth, this.font.width(deleteButtonText) + MacroButtonWidget.PADDING_X * 2);
 
-        int totalControlButtonsWidth = addWidth + editWidth + deleteWidth + (MacroButtonWidget.PADDING_X * 2);
+        int totalControlButtonsWidth = addWidth + (buttonDataList.isEmpty() ? 0 : editWidth + deleteWidth) + (buttonDataList.isEmpty() ? 0 : MacroButtonWidget.PADDING_X * 2);
         int controlButtonY = this.height - 40;
-
         int startX_control = this.width / 2 - totalControlButtonsWidth / 2;
 
         this.addRenderableWidget(Button.builder(
@@ -136,29 +168,30 @@ public class MacroMenuScreen extends BaseMacroScreen {
                 btn -> this.minecraft.setScreen(new AddMacroScreen(this))
         ).bounds(startX_control, controlButtonY, addWidth, scaledButtonHeight).build());
 
-        startX_control += addWidth + MacroButtonWidget.PADDING_X;
-        this.addRenderableWidget(Button.builder(
-                editButtonText,
-                btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.EDIT))
-        ).bounds(startX_control, controlButtonY, editWidth, scaledButtonHeight).build());
+        if (!buttonDataList.isEmpty()) {
+            startX_control += addWidth + MacroButtonWidget.PADDING_X;
+            this.addRenderableWidget(Button.builder(
+                    editButtonText,
+                    btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.EDIT))
+            ).bounds(startX_control, controlButtonY, editWidth, scaledButtonHeight).build());
 
-        startX_control += editWidth + MacroButtonWidget.PADDING_X;
-        this.addRenderableWidget(Button.builder(
-                deleteButtonText,
-                btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.DELETE))
-        ).bounds(startX_control, controlButtonY, deleteWidth, scaledButtonHeight).build());
+            startX_control += editWidth + MacroButtonWidget.PADDING_X;
+            this.addRenderableWidget(Button.builder(
+                    deleteButtonText,
+                    btn -> this.minecraft.setScreen(new SelectMacroScreen(this, SelectMacroScreen.Mode.DELETE))
+            ).bounds(startX_control, controlButtonY, deleteWidth, scaledButtonHeight).build());
+        }
     }
 
     private void runCommand(String command) {
         if (minecraft != null && minecraft.getConnection() != null) {
             double delaySeconds = ModConfig.getCommandDelaySeconds();
             if (delaySeconds > 0) {
-                // Виправлений рядок: додаємо TimeUnit.MILLISECONDS
                 MacroMenu.SCHEDULER.schedule(() -> {
                     if (minecraft.getConnection() != null) {
                         minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
                     }
-                }, (long) (delaySeconds * 1000), java.util.concurrent.TimeUnit.MILLISECONDS);
+                }, (long) (delaySeconds * 1000), TimeUnit.MILLISECONDS);
             } else {
                 minecraft.getConnection().sendCommand(command.startsWith("/") ? command.substring(1) : command);
             }

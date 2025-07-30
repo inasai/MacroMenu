@@ -22,16 +22,11 @@ public class ModConfig {
     private static final Type TAB_LIST_TYPE = new TypeToken<List<TabConfig>>(){}.getType();
     private static final File CONFIG_FILE = new File(FMLPaths.CONFIGDIR.get().toFile(), "macromenu.json");
 
-    // Нова структура для зберігання вкладок
     private static List<TabConfig> tabs = new ArrayList<>();
-
-    // Інші налаштування
     private static boolean showTooltips = true;
     private static double backgroundTransparency = 0.5;
     private static ButtonSize buttonSize = ButtonSize.MEDIUM;
     private static double commandDelaySeconds = 0.0;
-
-    // Нове поле для відстеження активної вкладки
     private static String activeTabName;
 
     public static void loadConfig() {
@@ -52,7 +47,6 @@ public class ModConfig {
             createDefaultConfig();
         }
 
-        // Встановлюємо активну вкладку, якщо вона є
         if (!tabs.isEmpty()) {
             if (activeTabName == null || tabs.stream().noneMatch(tab -> tab.name.equals(activeTabName))) {
                 activeTabName = tabs.get(0).name;
@@ -76,7 +70,6 @@ public class ModConfig {
         saveConfig();
     }
 
-    // Новий метод для отримання активної вкладки
     public static TabConfig getActiveTab() {
         return tabs.stream()
                 .filter(tab -> tab.name.equals(activeTabName))
@@ -100,17 +93,39 @@ public class ModConfig {
         saveConfig();
     }
 
+    public static void renameTab(String oldName, String newName) {
+        if (tabs.stream().noneMatch(tab -> tab.name.equals(newName))) {
+            tabs.stream()
+                    .filter(tab -> tab.name.equals(oldName))
+                    .findFirst()
+                    .ifPresent(tab -> tab.name = newName);
+
+            if (oldName.equals(activeTabName)) {
+                activeTabName = newName;
+            }
+            saveConfig();
+        }
+    }
+
     public static void setActiveTab(String name) {
         activeTabName = name;
     }
 
-    // Оновлені методи для роботи з макросами
     public static void addMacro(MacroButtonData data) {
         TabConfig activeTab = getActiveTab();
         if (activeTab != null) {
             activeTab.buttons.add(data);
             saveConfig();
         }
+    }
+
+    // Новий метод для додавання макросу в конкретну вкладку
+    public static void addMacroToTab(String tabName, MacroButtonData data) {
+        tabs.stream()
+                .filter(tab -> tab.name.equals(tabName))
+                .findFirst()
+                .ifPresent(tab -> tab.buttons.add(data));
+        saveConfig();
     }
 
     public static void updateMacro(int index, MacroButtonData data) {
@@ -129,13 +144,30 @@ public class ModConfig {
         }
     }
 
-    // Тепер отримуємо кнопки з активної вкладки
+    // Новий метод для переміщення макросу
+    public static void moveMacro(String fromTabName, int macroIndex, String toTabName) {
+        TabConfig fromTab = tabs.stream()
+                .filter(tab -> tab.name.equals(fromTabName))
+                .findFirst()
+                .orElse(null);
+
+        TabConfig toTab = tabs.stream()
+                .filter(tab -> tab.name.equals(toTabName))
+                .findFirst()
+                .orElse(null);
+
+        if (fromTab != null && toTab != null && macroIndex >= 0 && macroIndex < fromTab.buttons.size()) {
+            MacroButtonData macro = fromTab.buttons.remove(macroIndex);
+            toTab.buttons.add(macro);
+            saveConfig();
+        }
+    }
+
     public static List<MacroButtonData> getButtons() {
         TabConfig activeTab = getActiveTab();
         return (activeTab != null) ? Collections.unmodifiableList(activeTab.buttons) : Collections.emptyList();
     }
 
-    // Внутрішній клас для зберігання конфігурації вкладки
     public static class TabConfig {
         public String name;
         public List<MacroButtonData> buttons;
@@ -146,7 +178,6 @@ public class ModConfig {
         }
     }
 
-    // --- Методи для інших налаштувань залишаються без змін ---
     public static boolean showTooltips() { return showTooltips; }
     public static void setShowTooltips(boolean value) { showTooltips = value; saveConfig(); }
     public static double getBackgroundTransparency() { return backgroundTransparency; }

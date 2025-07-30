@@ -1,5 +1,8 @@
 package com.inasai.macromenu.client.gui;
 
+import com.inasai.macromenu.client.gui.macros.MacroButtonWidget;
+import com.inasai.macromenu.client.gui.widgets.CommandDelaySliderWidget;
+import com.inasai.macromenu.client.gui.widgets.TransparencySliderWidget;
 import com.inasai.macromenu.config.ModConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -9,8 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
-
-import com.inasai.macromenu.client.gui.CommandDelaySliderWidget;
 
 public class ModSettingsScreen extends BaseMacroScreen {
     private final Screen parentScreen;

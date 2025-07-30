@@ -1,4 +1,4 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.macros;
 
 import com.inasai.macromenu.config.ModConfig; // Додаємо імпорт ModConfig
 import com.inasai.macromenu.data.MacroButtonData;

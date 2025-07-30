@@ -1,4 +1,4 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.widgets;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

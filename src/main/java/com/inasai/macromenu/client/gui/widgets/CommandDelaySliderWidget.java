@@ -1,8 +1,7 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.widgets;
 
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 
 import java.util.function.Consumer;
 

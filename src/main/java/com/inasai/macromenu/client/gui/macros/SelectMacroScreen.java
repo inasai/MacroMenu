@@ -1,14 +1,13 @@
-package com.inasai.macromenu.client.gui;
+package com.inasai.macromenu.client.gui.macros;
 
+import com.inasai.macromenu.client.gui.BaseMacroScreen;
 import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
-import javax.annotation.Nonnull;
 
 public class SelectMacroScreen extends BaseMacroScreen {
     private final Screen parentScreen;
