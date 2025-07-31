@@ -7,13 +7,13 @@ import com.inasai.macromenu.client.gui.macros.MacroButtonWidget;
 import com.inasai.macromenu.client.gui.tabs.AddTabScreen;
 import com.inasai.macromenu.client.gui.tabs.ConfirmDeleteTabScreen;
 import com.inasai.macromenu.client.gui.tabs.TabButton;
+import com.inasai.macromenu.config.ClientConfig;
 import com.inasai.macromenu.config.ModConfig;
 import com.inasai.macromenu.data.MacroButtonData;
 import com.inasai.macromenu.MacroMenu;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-// net.minecraft.resources.ResourceLocation більше не потрібен для фону цього екрану
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -35,9 +35,9 @@ public class MacroMenuScreen extends BaseMacroScreen {
         super.init();
         this.clearWidgets();
 
-        double currentScale = ModConfig.getButtonSize().getScale();
+        double currentScale = ClientConfig.buttonSize.getScale();
         int scaledButtonHeight = (int) (MacroButtonWidget.BASE_BUTTON_HEIGHT * currentScale);
-        int scaledButtonSpacingY = (int) (BASE_BUTTON_SPACING_Y * currentScale);
+        int scaledButtonSpacingY = (int) (24 * currentScale);
 
         int smallButtonWidth = scaledButtonHeight;
         int buttonY = (TOP_AREA_HEIGHT - scaledButtonHeight) / 2;
@@ -51,11 +51,12 @@ public class MacroMenuScreen extends BaseMacroScreen {
             currentX -= smallButtonWidth + 5;
         }
 
+        // ОНОВЛЕНО: виклик методу enterEditMode у активної вкладки
         Button renameTabButton = Button.builder(
-                Component.literal("✎"), // Символ олівця для редагування
+                Component.literal("✎"),
                 btn -> {
-                    if (activeTabButton != null) {
-                        activeTabButton.enterEditMode();
+                    if (this.activeTabButton != null) {
+                        this.activeTabButton.enterEditMode();
                     }
                 }
         ).bounds(currentX, buttonY, smallButtonWidth, scaledButtonHeight).build();
@@ -120,7 +121,7 @@ public class MacroMenuScreen extends BaseMacroScreen {
                         buttonY_middle,
                         data,
                         data.getColor(),
-                        this // Передаємо посилання на MacroMenuScreen
+                        this
                 ));
 
                 this.addRenderableWidget(Button.builder(
@@ -160,21 +161,13 @@ public class MacroMenuScreen extends BaseMacroScreen {
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        // Рендеримо весь фон екрану з прозорістю з ModConfig
-        int alpha = (int) (ModConfig.getBackgroundTransparency());
-        int backgroundColor = (alpha << 24) | (0x000000); // Чорний колір з заданою прозорістю
-        guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
-
-        // Малюємо заголовок
-        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 5, 0xFFFFFF);
-
-        // Викликаємо супер-метод для рендерингу віджетів (кнопки, вкладки тощо)
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 5, 0xFFFFFF);
     }
 
     public void runCommand(String command) {
         if (minecraft != null && minecraft.getConnection() != null) {
-            double delaySeconds = ModConfig.getCommandDelaySeconds();
+            double delaySeconds = ClientConfig.commandDelaySeconds;
             if (delaySeconds > 0) {
                 MacroMenu.SCHEDULER.schedule(() -> {
                     if (minecraft.getConnection() != null) {

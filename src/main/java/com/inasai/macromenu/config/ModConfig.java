@@ -23,10 +23,6 @@ public class ModConfig {
     private static final File CONFIG_FILE = new File(FMLPaths.CONFIGDIR.get().toFile(), "macromenu.json");
 
     private static List<TabConfig> tabs = new ArrayList<>();
-    private static boolean showTooltips = true;
-    private static double backgroundTransparency = 0.5;
-    private static ButtonSize buttonSize = ButtonSize.MEDIUM;
-    private static double commandDelaySeconds = 0.0;
     private static String activeTabName;
 
     public static void loadConfig() {
@@ -52,6 +48,8 @@ public class ModConfig {
                 activeTabName = tabs.get(0).name;
             }
         }
+
+        ClientConfig.loadConfig();
     }
 
     public static void saveConfig() {
@@ -60,6 +58,7 @@ public class ModConfig {
         } catch (IOException e) {
             MacroMenu.LOGGER.error("Failed to save MacroMenu config", e);
         }
+        ClientConfig.saveConfig();
     }
 
     private static void createDefaultConfig() {
@@ -119,7 +118,6 @@ public class ModConfig {
         }
     }
 
-    // Новий метод для додавання макросу в конкретну вкладку
     public static void addMacroToTab(String tabName, MacroButtonData data) {
         tabs.stream()
                 .filter(tab -> tab.name.equals(tabName))
@@ -144,7 +142,6 @@ public class ModConfig {
         }
     }
 
-    // Новий метод для переміщення макросу
     public static void moveMacro(String fromTabName, int macroIndex, String toTabName) {
         TabConfig fromTab = tabs.stream()
                 .filter(tab -> tab.name.equals(fromTabName))
@@ -178,19 +175,38 @@ public class ModConfig {
         }
     }
 
-    public static boolean showTooltips() { return showTooltips; }
-    public static void setShowTooltips(boolean value) { showTooltips = value; saveConfig(); }
-    public static double getBackgroundTransparency() { return backgroundTransparency; }
-    public static void setBackgroundTransparency(double value) { backgroundTransparency = value; saveConfig(); }
-    public static ButtonSize getButtonSize() { return buttonSize; }
-    public static void setButtonSize(ButtonSize size) { buttonSize = size; saveConfig(); }
-    public static double getCommandDelaySeconds() { return commandDelaySeconds; }
-    public static void setCommandDelaySeconds(double value) { commandDelaySeconds = value; saveConfig(); }
+    public static boolean showTooltips() { return ClientConfig.showTooltips; }
+    public static void setShowTooltips(boolean value) { ClientConfig.showTooltips = value; saveConfig(); }
+    public static double getBackgroundTransparency() { return ClientConfig.backgroundTransparency; }
+    public static void setBackgroundTransparency(double value) { ClientConfig.backgroundTransparency = value; saveConfig(); }
+    public static ButtonSize getButtonSize() { return ClientConfig.buttonSize; }
+    public static void setButtonSize(ButtonSize size) { ClientConfig.buttonSize = size; saveConfig(); }
+    public static double getCommandDelaySeconds() { return ClientConfig.commandDelaySeconds; }
+    public static void setCommandDelaySeconds(double value) { ClientConfig.commandDelaySeconds = value; saveConfig(); }
 
-    public enum ButtonSize {
-        SMALL(0.75), MEDIUM(1.0), LARGE(1.25);
+    public static class ButtonSize {
+        public static final ButtonSize SMALL = new ButtonSize(0.75);
+        public static final ButtonSize MEDIUM = new ButtonSize(1.0);
+        public static final ButtonSize LARGE = new ButtonSize(1.25);
+        public static final ButtonSize[] values = {SMALL, MEDIUM, LARGE};
+
         private final double scale;
-        ButtonSize(double scale) { this.scale = scale; }
+        private ButtonSize(double scale) { this.scale = scale; }
         public double getScale() { return scale; }
+
+        public static ButtonSize fromName(String name) {
+            for (ButtonSize size : values) {
+                if (size.name().equalsIgnoreCase(name)) {
+                    return size;
+                }
+            }
+            return MEDIUM;
+        }
+
+        public String name() {
+            if (this.scale == SMALL.scale) return "SMALL";
+            if (this.scale == LARGE.scale) return "LARGE";
+            return "MEDIUM";
+        }
     }
 }
