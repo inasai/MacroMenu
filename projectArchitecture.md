@@ -15,8 +15,7 @@
     │               │   │   │   ├── AddMacroScreen.java
     │               │   │   │   ├── ConfirmDeleteScreen.java
     │               │   │   │   ├── EditMacroScreen.java
-    │               │   │   │   ├── MacroButtonWidget.java
-    │               │   │   │   └── SelectMacroScreen.java
+    │               │   │   │   └── MacroButtonWidget.java
     │               │   │   ├── ModSettingsScreen.java
     │               │   │   ├── NotificationManager.java
     │               │   │   ├── tabs
@@ -26,6 +25,7 @@
     │               │   │   │   ├── SelectTabScreen.java
     │               │   │   │   └── TabButton.java
     │               │   │   └── widgets
+    │               │   │       ├── BackgroundWidget.java
     │               │   │       ├── CommandDelaySliderWidget.java
     │               │   │       ├── GuiNotification.java
     │               │   │       └── TransparencySliderWidget.java

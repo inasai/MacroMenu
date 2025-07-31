@@ -81,7 +81,7 @@ public class TabButton extends Button {
         } else {
             int textColor = 0xFFFFFF;
             if (isActive) {
-                textColor = 0xFFFF00; // Жовтий колір для активної вкладки
+                textColor = 0x00CCFF; // Жовтий колір для активної вкладки
             }
             guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage(), this.getX() + this.getWidth() / 2, this.getY() + (this.getHeight() - 8) / 2, textColor);
         }

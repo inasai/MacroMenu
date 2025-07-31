@@ -161,7 +161,7 @@ public class MacroMenuScreen extends BaseMacroScreen {
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Рендеримо весь фон екрану з прозорістю з ModConfig
-        int alpha = (int) (ModConfig.getBackgroundTransparency() * 255.0D);
+        int alpha = (int) (ModConfig.getBackgroundTransparency());
         int backgroundColor = (alpha << 24) | (0x000000); // Чорний колір з заданою прозорістю
         guiGraphics.fill(0, 0, this.width, this.height, backgroundColor);
 
